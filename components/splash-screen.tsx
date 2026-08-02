@@ -1,113 +1,83 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { motion } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 import { AtomMark } from "@/components/squad-logo"
 
-const TARGET = "SQUAD"
 const GLYPHS = "!<>-_\\/[]{}—=+*^?#01ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+// Renders: S Q U ⚛ D
+// Sequence: all 5 slots scramble → lock one by one as random glyphs → 
+// resolve to S Q U [atom] D — A is never shown
 function DecodingText() {
-  // locked[i] = true once that letter has resolved
-  const [locked, setLocked] = useState<boolean[]>([false, false, false, false, false])
-  const [atomVisible, setAtomVisible] = useState(false)
+  // each slot: "scrambling" | "locked"
+  const [phase, setPhase] = useState<"scrambling" | "done">("scrambling")
+  const [lockedCount, setLockedCount] = useState(0) // 0-5 slots locked
+  const [scramble, setScramble] = useState<string[]>(["", "", "", "", ""])
+
+  // The resolved display for each slot (atom replaces the A at index 3)
+  const RESOLVED = ["S", "Q", "U", "⚛", "D"]
 
   useEffect(() => {
-    // Lock S, Q, U, D in sequence — leave index 3 (A) for last
-    const order = [0, 1, 2, 4] // S Q U D
-    const timers: ReturnType<typeof setTimeout>[] = []
-
-    order.forEach((idx, step) => {
-      timers.push(
-        setTimeout(() => {
-          setLocked((prev) => {
-            const next = [...prev]
-            next[idx] = true
-            return next
-          })
-        }, 400 + step * 300),
+    // Scramble interval
+    const id = setInterval(() => {
+      setScramble(() =>
+        RESOLVED.map((_, i) =>
+          GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+        )
       )
-    })
+    }, 55)
 
-    // Lock the A last, then immediately swap to atom
-    timers.push(
+    // Lock slots one by one: S→Q→U→atom→D
+    const lockTimers = [0, 1, 2, 3, 4].map((i) =>
       setTimeout(() => {
-        setLocked([true, true, true, true, true])
-        setTimeout(() => setAtomVisible(true), 120)
-      }, 400 + 4 * 300),
+        setLockedCount(i + 1)
+      }, 500 + i * 280)
     )
 
-    return () => timers.forEach(clearTimeout)
+    // After all locked, mark done
+    const doneTimer = setTimeout(() => {
+      clearInterval(id)
+      setPhase("done")
+    }, 500 + 5 * 280 + 100)
+
+    return () => {
+      clearInterval(id)
+      lockTimers.forEach(clearTimeout)
+      clearTimeout(doneTimer)
+    }
   }, [])
-
-  // Scramble display for unlocked letters
-  const [scramble, setScramble] = useState<string[]>(["", "", "", "", ""])
-  useEffect(() => {
-    const id = setInterval(() => {
-      setScramble(TARGET.split("").map((ch, i) => {
-        if (locked[i]) return ch
-        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
-      }))
-    }, 55)
-    return () => clearInterval(id)
-  }, [locked])
-
-  // Ghost text for RGB split — always show plain letters (no atom in ghost)
-  const ghostText = TARGET.split("").map((ch, i) => locked[i] ? ch : (scramble[i] || ch)).join("")
 
   return (
     <span
-      className="relative inline-flex items-center font-display text-6xl font-bold tracking-[0.1em] text-white sm:text-7xl md:text-8xl"
+      className="inline-flex items-center font-display text-6xl font-bold tracking-[0.1em] text-white sm:text-7xl md:text-8xl"
       aria-label="SQUAD"
     >
-      {/* RGB split layers */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 select-none text-[oklch(0.7_0.2_20)] opacity-70"
-        style={{ transform: "translate(-2px,0)", mixBlendMode: "screen" }}
-      >
-        {ghostText}
-      </span>
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 select-none text-[oklch(0.7_0.15_230)] opacity-70"
-        style={{ transform: "translate(2px,0)", mixBlendMode: "screen" }}
-      >
-        {ghostText}
+      {/* S */}
+      <span>{lockedCount > 0 ? "S" : (scramble[0] || "\u00A0")}</span>
+      {/* Q */}
+      <span>{lockedCount > 1 ? "Q" : (scramble[1] || "\u00A0")}</span>
+      {/* U */}
+      <span>{lockedCount > 2 ? "U" : (scramble[2] || "\u00A0")}</span>
+
+      {/* ⚛ — atom replaces A, never shows the letter A */}
+      <span className="inline-flex items-center justify-center" style={{ width: "0.72em" }}>
+        {lockedCount > 3 ? (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.3, rotate: -180 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 16 }}
+            className="inline-flex"
+          >
+            <AtomMark className="h-[0.78em] w-[0.78em]" />
+          </motion.span>
+        ) : (
+          <span>{scramble[3] || "\u00A0"}</span>
+        )}
       </span>
 
-      <span className="relative inline-flex items-center gap-[0.02em]">
-        {TARGET.split("").map((ch, i) => {
-          // The A slot
-          if (i === 3) {
-            if (atomVisible) {
-              return (
-                <motion.span
-                  key="atom"
-                  initial={{ opacity: 0, scale: 0.4, rotate: -180 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 14 }}
-                  className="inline-flex items-center justify-center text-white"
-                >
-                  <AtomMark className="h-[0.82em] w-[0.82em]" />
-                </motion.span>
-              )
-            }
-            // Show "A" while other letters decode, then lock it last
-            return (
-              <span key="a-slot">
-                {locked[i] ? "A" : (scramble[i] || "\u00A0")}
-              </span>
-            )
-          }
-
-          return (
-            <span key={i} className={locked[i] ? "" : "opacity-70"}>
-              {locked[i] ? ch : (scramble[i] || "\u00A0")}
-            </span>
-          )
-        })}
-      </span>
+      {/* D */}
+      <span>{lockedCount > 4 ? "D" : (scramble[4] || "\u00A0")}</span>
     </span>
   )
 }
@@ -115,14 +85,13 @@ function DecodingText() {
 export function SplashScreen({ onDismiss }: { onDismiss: () => void }) {
   const calledRef = useRef(false)
 
-  // Auto-dismiss after 3.5 seconds
   useEffect(() => {
     const t = setTimeout(() => {
       if (!calledRef.current) {
         calledRef.current = true
         onDismiss()
       }
-    }, 3500)
+    }, 3800)
     return () => clearTimeout(t)
   }, [onDismiss])
 
@@ -141,7 +110,6 @@ export function SplashScreen({ onDismiss }: { onDismiss: () => void }) {
       exit={{ y: "-100%" }}
       transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
     >
-      {/* CRT scanlines */}
       <div className="pointer-events-none absolute inset-0 opacity-60" style={scanlines} />
 
       <div className="relative flex flex-col items-center gap-8 px-6">
@@ -157,7 +125,7 @@ export function SplashScreen({ onDismiss }: { onDismiss: () => void }) {
           className="max-w-md text-center text-sm tracking-wide text-white/60"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.8 }}
+          transition={{ duration: 0.5, delay: 2 }}
         >
           Departmental Club — Data Science Department, MLRIT
         </motion.p>
