@@ -38,8 +38,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#ede9fe',
+  colorScheme: 'dark',
+  themeColor: '#0f1a2e',
 }
 
 export default function RootLayout({
@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      style={{ colorScheme: 'light' }}
+      style={{ colorScheme: 'dark' }}
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="antialiased">
