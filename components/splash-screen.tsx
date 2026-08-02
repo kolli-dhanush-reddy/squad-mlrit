@@ -64,6 +64,7 @@ function DecodingText() {
       <span className="relative inline-flex items-center gap-[0.02em]">
         {display.map((c, i) => {
           if (i === ATOM_INDEX) {
+            // Always show the atom slot — locked to "A" during decode, then swaps to atom SVG
             if (atomRevealed) {
               return (
                 <motion.span
@@ -77,9 +78,10 @@ function DecodingText() {
                 </motion.span>
               )
             }
+            // Lock the A slot to always show "A" while other letters are still decoding
             return (
               <span key={i} className="opacity-90">
-                {c || "\u00A0"}
+                A
               </span>
             )
           }
