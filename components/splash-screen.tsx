@@ -141,7 +141,7 @@ export function SplashScreen({ onDismiss }: { onDismiss: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1.8 }}
         >
-          Departmental Technical Club — Data Science Department, MLRIT
+          Departmental Club — Data Science Department, MLRIT
         </motion.p>
       </div>
     </motion.div>

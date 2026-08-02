@@ -55,7 +55,7 @@ export function AboutSection() {
             <div className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-white/30 backdrop-blur-md p-4">
               <AtomMark className="h-8 w-8 text-primary" />
               <p className="text-sm font-medium text-foreground">
-                Departmental Technical Club — Data Science, MLRIT
+                Departmental Club — Data Science, MLRIT
               </p>
             </div>
           </div>

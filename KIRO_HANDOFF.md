@@ -6,7 +6,7 @@ This file contains everything needed to continue development without any prior c
 
 ## Project Overview
 
-**Website for:** SQUAD — Departmental Technical Club, Data Science Dept., MLRIT  
+**Website for:** SQUAD — Departmental Club, Data Science Dept., MLRIT  
 **Primary audience:** Parents attending Orientation Day + club website for students/faculty  
 **Folder:** `squad-club-portal-final/` (root level alongside `squad-club-portal/` and `squad-club-portal-main/`)  
 **Stack:** Next.js 16.2.6, React 19, TypeScript, Tailwind CSS v4, Framer Motion (motion), shadcn/base-ui

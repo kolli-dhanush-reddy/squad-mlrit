@@ -15,7 +15,7 @@ export function Footer() {
           <div className="flex max-w-xs flex-col gap-3">
             <SquadWordmark tone="dark" className="text-2xl" />
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Departmental Technical Club — Data Science, MLRIT. Building, competing, and
+              Departmental Club — Data Science, MLRIT. Building, competing, and
               celebrating together.
             </p>
             <a

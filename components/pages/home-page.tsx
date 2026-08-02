@@ -48,7 +48,7 @@ export function HomeSection() {
           transition={{ duration: 0.5 }}
         >
           <AtomMark className="h-4 w-4 text-primary" />
-          Departmental Technical Club — Data Science, MLRIT
+          Departmental Club — Data Science, MLRIT
         </motion.span>
 
         <motion.h1
