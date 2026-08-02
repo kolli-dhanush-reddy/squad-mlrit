@@ -1,241 +1,504 @@
-# SQUAD Club Portal — Kiro Handoff File
+# SQUAD Club Portal — Complete Kiro Handoff File
 
-This file contains everything needed to continue development without any prior conversation context.
-Last updated: after splash screen rework + image upload planning.
-
----
-
-## Project Overview
-
-**Website for:** SQUAD — Departmental Club, Data Science Dept., MLRIT
-**Primary audience:** Parents attending Orientation Day + club website for students/faculty
-**Folder:** `squad-club-portal-final/` (root level alongside `squad-club-portal/` and `squad-club-portal-main/`)
-**Stack:** Next.js 16.2.6, React 19, TypeScript, Tailwind CSS v4, Framer Motion (motion), shadcn/base-ui
-**GitHub repo:** https://github.com/kolli-dhanush-reddy/squad-mlrit
+> This document is the single source of truth for continuing development.
+> It was written to allow any developer (or Kiro session) to pick up exactly where work left off
+> without needing any prior conversation history.
+>
+> Last updated: after Option C gradient theme applied.
 
 ---
 
-## What Was Built
+## 1. Project Identity
 
-Merger of two existing versions:
-
-| Version | Folder | Role |
-|---------|--------|------|
-| V1 | `squad-club-portal/` | Structure, routing, page content, data |
-| V2 | `squad-club-portal-main/squad-club-portal-main/` | Better graphics, animations, splash screen |
-
-### Final result takes:
-- V1's multi-page routing (not SPA)
-- V1's 4 events (CodeX, Unplugged, Outreach, Project Expo) — Traditional Day intentionally excluded
-- V1's social links (Instagram + LinkedIn only)
-- V1's page structure (/about, /events, /gallery, /squad, /join, /contact)
-- V2's splash screen (reworked — see below)
-- V2's animations (stagger reveals, whileHover lifts, blur blobs, glassmorphism cards)
-- Refined violet/indigo theme
+| Field | Value |
+|-------|-------|
+| Club name | SQUAD |
+| Full name | Departmental Club — Data Science, MLRIT |
+| Primary audience | Parents attending Orientation Day (first priority) + club website for students/faculty |
+| Contact email | squadmlrit@gmail.com |
+| Instagram | https://www.instagram.com/squadmlrit |
+| LinkedIn | https://www.linkedin.com/in/squadclub |
+| GitHub repo | https://github.com/kolli-dhanush-reddy/squad-mlrit |
+| Local folder | `squad-club-portal-final/` at workspace root |
 
 ---
 
-## All Decisions Made
+## 2. Tech Stack
 
-1. **Multi-page routing** — kept for bookmarkable URLs and SEO
-2. **No Traditional Day** — intentionally removed by seniors, do NOT add it back
-3. **4 events only** — codex, unplugged, outreach, project-expo
-4. **Events as modal popups** — click card → modal with gallery (not stacked scroll)
-5. **Splash screen auto-dismiss** — 3.8s timer, no button
-6. **Social links: Instagram + LinkedIn only**
-7. **Join page = Applications Closed** — do NOT change to a form
-8. **Theme = soft violet** — background `oklch(0.94 0.022 285)`, primary `oklch(0.45 0.18 278)`. Changed from near-white after seniors said it was "too white"
-9. **No new sections** — seniors said don't add anything new
-10. **Admin panel password** = `Squad2026` (trigger: Ctrl/Cmd+Shift+A or click footer copyright text)
-11. **"Departmental Technical Club" → "Departmental Club"** — changed sitewide per seniors
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Next.js | 16.2.6 | Framework (App Router) |
+| React | 19 | UI |
+| TypeScript | 5.7.3 | Types |
+| Tailwind CSS | v4.3.3 | Styling |
+| Framer Motion | motion ^12.43.0 | All animations |
+| shadcn / base-ui | latest | Button primitive |
+| Vercel Analytics | 1.6.1 | Production analytics (already installed) |
+| lucide-react | ^1.16.0 | Icons |
 
----
-
-## Splash Screen (fully reworked)
-
-**File:** `components/splash-screen.tsx`
-
-**Current behavior:**
-- All 5 letter slots start scrambling with random glyphs
-- S → Q → U lock in sequence (280ms apart)
-- The A slot resolves directly to the **atom SVG** (A is never shown as a letter)
-- D locks last
-- Subtitle fades in after 2s
-- Auto-dismisses after 3.8s
-
-**Key detail:** `RESOLVED = ["S", "Q", "U", "⚛", "D"]` — index 3 is the atom, never "A".
-The atom animates in with `scale: 0.3 → 1, rotate: -180 → 0` spring animation.
-
-**No RGB split layers** in current version (removed to simplify). If you want to re-add the chromatic aberration effect, it used two `absolute` spans with `mix-blend-mode: screen` offset by ±2px.
+**Package manager:** npm (pnpm was used originally in V1/V2 but final project uses npm)
+**Build command:** `npm run build`
+**Dev command:** `npm run dev` → http://localhost:3000
 
 ---
 
-## File Structure
+## 3. Project Origin — What Was Merged
+
+This project was built by merging two existing versions:
+
+### V1 (`squad-club-portal/`)
+- Multi-page routing with 7 routes
+- All real content (event descriptions, team data, contact info)
+- 4 events: CodeX, Unplugged, Outreach, Project Expo
+- Events shown as modal popups when clicked
+- Instagram + LinkedIn socials only
+- Simpler splash screen (auto-dismiss timer, no animation)
+
+### V2 (`squad-club-portal-main/squad-club-portal-main/`)
+- Single-page app (not used — V1 routing kept)
+- Much better splash screen with glyph-decode animation
+- Better card animations, hover effects, glassmorphism
+- 5 events (Traditional Day added — NOT included in final)
+- More social links (GitHub, X — NOT included in final)
+
+### Final version takes:
+- V1's structure, routing, content, data
+- V2's splash screen (heavily reworked — see Section 6)
+- V2's animation style (applied to all V1 components)
+- Custom theme (Option C gradient — see Section 7)
+
+---
+
+## 4. Complete File Structure
 
 ```
 squad-club-portal-final/
-├── app/
-│   ├── globals.css          ← Theme variables, Tailwind imports
-│   ├── layout.tsx           ← Root layout (fonts, metadata, CustomCursor, LayoutWrapper)
-│   ├── page.tsx             ← Home → HomeSection
-│   ├── about/page.tsx
-│   ├── events/page.tsx      ← Events → EventsHub (modal-based)
-│   ├── gallery/page.tsx
-│   ├── squad/page.tsx
-│   ├── join/page.tsx        ← Static "Applications Closed" page
-│   └── contact/page.tsx
+│
+├── app/                              ← Next.js App Router
+│   ├── globals.css                   ← ALL theme variables + Tailwind imports + body gradient
+│   ├── layout.tsx                    ← Root layout: fonts, metadata, CustomCursor, LayoutWrapper
+│   ├── page.tsx                      ← / → renders HomeSection
+│   ├── about/
+│   │   └── page.tsx                  ← /about → renders AboutSection
+│   ├── events/
+│   │   └── page.tsx                  ← /events → renders EventsHub
+│   ├── gallery/
+│   │   └── page.tsx                  ← /gallery → renders GallerySection
+│   ├── squad/
+│   │   └── page.tsx                  ← /squad → renders SquadSection
+│   ├── join/
+│   │   └── page.tsx                  ← /join → static "Applications Closed" page (inline component)
+│   └── contact/
+│       └── page.tsx                  ← /contact → renders ContactPage
+│
 ├── components/
-│   ├── splash-screen.tsx    ← Glyph-decode, atom replaces A, auto-dismiss 3.8s
-│   ├── layout-wrapper.tsx   ← Controls splash show/hide state
-│   ├── navbar.tsx           ← usePathname active state, Link routing
-│   ├── footer.tsx           ← Nav + social links (Instagram + LinkedIn)
-│   ├── custom-cursor.tsx    ← Spring cursor (desktop only)
-│   ├── admin-panel.tsx      ← Secret admin UI (mockup, not wired to backend)
-│   ├── squad-logo.tsx       ← AtomMark SVG + SquadWordmark
-│   ├── team-grid.tsx        ← Team member cards
-│   ├── gallery.tsx          ← Masonry grid with lightbox trigger
-│   ├── lightbox.tsx         ← Full-screen image viewer
-│   ├── ui/button.tsx
+│   ├── splash-screen.tsx             ← Glyph-decode animation, atom replaces A, auto-dismiss 3.8s
+│   ├── layout-wrapper.tsx            ← Client component: manages showSplash state
+│   ├── navbar.tsx                    ← Sticky nav, usePathname active state, Link routing, mobile menu
+│   ├── footer.tsx                    ← Logo, nav links (Explore + More), social links, admin trigger
+│   ├── custom-cursor.tsx             ← Spring-based dual cursor (ring + dot), desktop only
+│   ├── admin-panel.tsx               ← Secret editor UI, password-protected, mockup only
+│   ├── squad-logo.tsx                ← AtomMark SVG component + SquadWordmark component
+│   ├── team-grid.tsx                 ← Grid of CORE_TEAM member cards (reads from lib/data.ts)
+│   ├── gallery.tsx                   ← Masonry grid, triggers lightbox on click
+│   ├── lightbox.tsx                  ← Full-screen image viewer, keyboard nav (arrow keys + esc)
+│   ├── ui/
+│   │   └── button.tsx                ← Base-UI button with CVA variants
 │   └── pages/
-│       ├── home-page.tsx    ← Hero + marquee + pillars + stats + what-we-do + CTA
-│       ├── about-page.tsx   ← Mission/vision + pillars + stats
-│       ├── events-hub.tsx   ← Event cards + EventModal
-│       ├── gallery-page.tsx ← GALLERY_IMAGES from data.ts
-│       ├── squad-page.tsx   ← Core team grid
-│       └── contact-page.tsx ← Form + socials + info
+│       ├── home-page.tsx             ← Hero + marquee + mission pillars + stats strip + what-we-do cards + CTA
+│       ├── about-page.tsx            ← Mission/vision text + 3 pillar cards + impact stats grid
+│       ├── events-hub.tsx            ← 4 event cards grid + EventModal (inline component)
+│       ├── gallery-page.tsx          ← Page header + Gallery component using GALLERY_IMAGES
+│       ├── squad-page.tsx            ← Page header + team member cards grid
+│       └── contact-page.tsx          ← Contact form (not wired) + info row + social links
+│
 ├── lib/
-│   ├── data.ts              ← All site data
-│   └── utils.ts             ← cn() helper
-└── public/
-    ├── squad-logo.png
-    ├── placeholder.svg      ← Replace with real images
-    └── events/              ← PUT REAL PHOTOS HERE (see below)
+│   ├── data.ts                       ← SINGLE SOURCE OF TRUTH for all site content
+│   └── utils.ts                      ← cn() helper (clsx + tailwind-merge)
+│
+├── public/
+│   ├── squad-logo.png                ← Club logo
+│   ├── placeholder.svg               ← Used everywhere real images are missing
+│   ├── placeholder-user.jpg          ← Used for team member photos
+│   └── [events/ and team/ folders]   ← THESE DON'T EXIST YET — add real photos here
+│
+├── KIRO_HANDOFF.md                   ← This file
+├── package.json
+├── next.config.mjs                   ← typescript.ignoreBuildErrors: true (intentional)
+├── tsconfig.json
+├── postcss.config.mjs
+└── .gitignore
 ```
 
 ---
 
-## Data File: lib/data.ts
+## 5. lib/data.ts — Full Data Reference
 
-### Key exports:
-- `NAV_TABS` — 6 tabs: home, about, events, squad, gallery, contact
-- `CORE_TEAM` — 8 members, all placeholder (replace with real names/photos)
-- `EVENTS` — 4 events: codex, unplugged, outreach, project-expo
-- `SOCIALS` — Instagram + LinkedIn (real URLs already in file)
-- `GALLERY_IMAGES` — 8 static placeholder images for /gallery page
-- `CONTACT_EMAIL` — `squadmlrit@gmail.com`
+This is the only file you need to edit to update site content. Never hardcode content in components.
 
-### Real contact info already in the file:
-- Instagram: `https://www.instagram.com/squadmlrit`
-- LinkedIn: `https://www.linkedin.com/in/squadclub`
-- Email: `squadmlrit@gmail.com`
+### SectionId type
+```ts
+type SectionId = "home" | "about" | "events" | "squad" | "gallery" | "contact"
+```
+
+### NAV_TABS
+6 navigation items. Controls both the navbar and footer links.
+```ts
+[home, about, events, squad, gallery, contact]
+```
+
+### CORE_TEAM
+8 members, all currently placeholder data.
+```ts
+type TeamMember = { id: number; name: string; role: string; avatar: string }
+```
+To update: change name/role values, set avatar to `/team/filename.webp`
+
+### EVENTS
+Record of 4 events. Key type: `"codex" | "unplugged" | "outreach" | "project-expo"`
+```ts
+type EventContent = {
+  id: string
+  title: string
+  tagline: string
+  description: string
+  highlights: string[]   // shown as pills in card and modal
+  images: GalleryImage[] // currently generated by buildGallery() placeholder function
+}
+```
+To add real images: replace `images: buildGallery(...)` with a real array (see Section 9).
+
+### SOCIALS
+Instagram + LinkedIn only. Real URLs already in the file.
+```ts
+[
+  { label: "Instagram", href: "https://www.instagram.com/squadmlrit...", handle: "@squadmlrit" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/squadclub...", handle: "SQUAD — MLRIT" },
+]
+```
+Do NOT add GitHub or X — seniors decided Instagram + LinkedIn only.
+
+### GALLERY_IMAGES
+8 static images for the `/gallery` page (separate from event galleries).
+Replace with real highlight photos when available.
+
+### CONTACT_EMAIL
+`"squadmlrit@gmail.com"` — used in footer and contact page.
 
 ---
 
-## PENDING TASKS
+## 6. Splash Screen — Full Technical Detail
 
-### 1. Add Real Event Photos (IN PROGRESS)
+**File:** `components/splash-screen.tsx`
 
-User is uploading photos via GitHub web UI. No Kiro credits needed for this step.
+### What it does
+1. All 5 letter slots start with empty strings
+2. A `setInterval` at 55ms randomizes all unlocked slots with glyphs from:
+   `"!<>-_\\/[]{}—=+*^?#01ABCDEFGHIJKLMNOPQRSTUVWXYZ"`
+3. Timeouts lock each slot in order: S (500ms) → Q (780ms) → U (1060ms) → **atom** (1340ms) → D (1620ms)
+4. When a slot locks, it stops scrambling and shows its final value
+5. Index 3 (the A position) resolves to the **AtomMark SVG**, never to the letter "A"
+6. The atom animates in: `scale: 0.3→1, rotate: -180→0` spring animation
+7. Subtitle ("Departmental Club...") fades in at 2s delay
+8. `onDismiss` is called after 3.8s via `setTimeout` in `layout-wrapper.tsx`
+9. Exit animation: the whole panel slides up (`y: "-100%"`) over 0.9s
 
-**Upload process:**
-1. Go to https://github.com/kolli-dhanush-reddy/squad-mlrit
-2. Navigate to `public/` → "Add file" → "Upload files"
-3. Upload into subfolders:
-   - `public/events/codex/`
-   - `public/events/unplugged/`
-   - `public/events/outreach/`
-   - `public/events/project-expo/`
-4. Compress photos first at **squoosh.app** → WebP, 80% quality (GitHub limit: 25MB/file)
-5. After upload, tell Kiro the filenames → Kiro updates `lib/data.ts`
-
-**When photos are ready, update `lib/data.ts` like this:**
+### Key code — why A never shows
 ```ts
-// Replace buildGallery(...) calls with real arrays:
-codex: {
-  ...
-  images: [
-    { id: 1, src: "/events/codex/photo1.webp", alt: "CodeX 2024 — photo 1", span: "square" },
-    { id: 2, src: "/events/codex/photo2.webp", alt: "CodeX 2024 — photo 2", span: "tall" },
-    // span options: "square" | "tall" | "wide"
-  ]
+const RESOLVED = ["S", "Q", "U", "⚛", "D"]
+// index 3 is the atom placeholder — the render logic checks i === 3
+// and renders <AtomMark> instead of any letter
+```
+
+### How to adjust timing
+- Change `500 + i * 280` to adjust when letters lock (currently 500ms start, 280ms between each)
+- Change `3800` in layout-wrapper.tsx to adjust auto-dismiss duration
+
+### How LayoutWrapper uses SplashScreen
+```tsx
+// layout-wrapper.tsx
+const [showSplash, setShowSplash] = useState(true)
+// SplashScreen receives onDismiss which sets showSplash(false)
+// Children (Navbar + page + Footer) only render when showSplash is false
+```
+
+---
+
+## 7. Theme — Current State (Option C)
+
+**Description:** Rich violet → deep indigo gradient. Dark background, light text, vibrant violet primary.
+
+### CSS Variables (in app/globals.css)
+
+| Variable | Value | Notes |
+|----------|-------|-------|
+| `--background` | `oklch(0.16 0.06 285)` | Dark violet-indigo base |
+| `--foreground` | `oklch(0.96 0.006 280)` | Near-white text |
+| `--card` | `oklch(0.21 0.07 280 / 75%)` | Semi-transparent card bg |
+| `--primary` | `oklch(0.72 0.22 280)` | Bright violet (buttons, links, accents) |
+| `--primary-foreground` | `oklch(0.98 0.004 280)` | Text on primary buttons |
+| `--accent` | `oklch(0.30 0.10 280)` | Subtle violet for pill/icon backgrounds |
+| `--accent-foreground` | `oklch(0.88 0.14 280)` | Text on accent bg |
+| `--muted-foreground` | `oklch(0.65 0.04 275)` | Secondary/helper text |
+| `--border` | `oklch(0.30 0.08 280)` | Card and divider borders |
+
+### Body gradient (in globals.css)
+```css
+body {
+  background-image: linear-gradient(
+    135deg,
+    oklch(0.18 0.09 300) 0%,    /* violet-pink top-left */
+    oklch(0.16 0.06 285) 50%,   /* deep violet center */
+    oklch(0.14 0.08 260) 100%   /* dark indigo bottom-right */
+  );
+  background-attachment: fixed; /* gradient stays fixed as user scrolls */
 }
 ```
 
-### 2. Add Real Team Member Photos + Names
+### How to adjust
+- **Darker overall:** lower the first number in `--background` (0.16 → 0.12)
+- **More purple vs blue:** increase the hue value (285 → 295 = more purple, 285 → 270 = more blue)
+- **Brighter accent buttons:** raise `--primary` lightness (0.72 → 0.80)
 
-Update `CORE_TEAM` in `lib/data.ts`:
-```ts
-{ id: 1, name: "Real Name", role: "President", avatar: "/team/name.webp" }
-```
-Upload photos to `public/team/`.
+### Theme checkpoints (git tags)
+| Tag | Description |
+|-----|-------------|
+| `checkpoint-violet-theme` | Original soft light violet (very first theme) |
+| `checkpoint-navy-theme` | Deep navy blue (Option A) |
+| current `master` | Option C rich gradient (active) |
 
-### 3. Wire Contact Form
-
-Currently shows "Message sent" but doesn't actually send. Options:
-- **Easiest:** Use Formspree.io — add `action="https://formspree.io/f/YOUR_ID"` to the form
-- **Next.js API route:** `app/api/contact/route.ts` that emails via Resend/Nodemailer
-
-### 4. Admin Panel — Mockup Only
-
-`components/admin-panel.tsx` is visual demo only. Password: `Squad2026`. For real editing, would need backend (Google Sheets API is the recommended approach — see discussion in chat).
-
-### 5. Deployment
-
-Not deployed yet. To deploy to Vercel:
+To restore a checkpoint:
 ```bash
+git checkout checkpoint-violet-theme -- app/globals.css app/layout.tsx
+git commit -m "restore: violet theme"
+git push
+```
+
+---
+
+## 8. Admin Panel
+
+**File:** `components/admin-panel.tsx`
+**Password:** `Squad2026`
+**Trigger methods:**
+1. Keyboard: `Ctrl + Shift + A` (or `Cmd + Shift + A` on Mac)
+2. Click the "Designed & built by the SQUAD core team." text in the footer
+
+**Current state:** Visual mockup only. The panel shows text/image/layout/theme "tools" in a sidebar but none of them actually save anything. The "Save changes" button is disabled.
+
+**How to make it functional (discussed but not implemented):**
+The recommended approach was Google Sheets as a backend:
+- Each editable field maps to a row in a Google Sheet
+- Admin saves → POST to a Next.js API route → writes to Google Sheet via Sheets API
+- Site reads from the Sheet at build/request time
+- Everyone on the team can edit the Sheet directly too
+
+The alternative was Formspree/Resend for the contact form only, or a full headless CMS like Sanity.
+
+---
+
+## 9. Pending Tasks
+
+### A. Replace Event Photos (HIGH PRIORITY — user is uploading these)
+
+**Upload method (no credits needed):**
+1. Go to https://github.com/kolli-dhanush-reddy/squad-mlrit
+2. Navigate to `public/` → "Add file" → "Upload files"
+3. Compress photos at **squoosh.app** → WebP format, 80% quality before uploading
+4. GitHub limits: 25MB per file, 100MB per commit
+5. Organize into folders:
+   - `public/events/codex/photo1.webp`, `photo2.webp` etc.
+   - `public/events/unplugged/photo1.webp` etc.
+   - `public/events/outreach/photo1.webp` etc.
+   - `public/events/project-expo/photo1.webp` etc.
+
+**After upload, edit `lib/data.ts` — replace `buildGallery(...)` calls:**
+```ts
+codex: {
+  id: "codex",
+  title: "CodeX",
+  tagline: "...",
+  description: "...",
+  highlights: [...],
+  images: [
+    { id: 1, src: "/events/codex/photo1.webp", alt: "CodeX 2024", span: "square" },
+    { id: 2, src: "/events/codex/photo2.webp", alt: "CodeX 2024", span: "tall" },
+    { id: 3, src: "/events/codex/photo3.webp", alt: "CodeX 2024", span: "wide" },
+    // span values: "square" | "tall" | "wide"
+    // tall = portrait (row-span-2), wide = landscape (col-span-2), square = 1x1
+  ],
+},
+```
+Repeat for unplugged, outreach, project-expo.
+
+Also update `GALLERY_IMAGES` array with highlight photos for the `/gallery` page.
+
+### B. Replace Team Member Photos + Names
+
+```ts
+// In lib/data.ts, CORE_TEAM array:
+{ id: 1, name: "Actual Name", role: "President", avatar: "/team/name.webp" }
+```
+Upload photos to `public/team/name.webp` via GitHub web UI.
+Current placeholder: `/placeholder.svg?height=400&width=400`
+
+### C. Wire the Contact Form
+
+Currently `contact-page.tsx` handles submit by setting a "sent" state for 3.5s but doesn't send anything.
+
+**Easiest fix (Formspree — free tier, no backend needed):**
+1. Sign up at formspree.io
+2. Create a form, get your form ID (e.g. `xrgvpqna`)
+3. In `contact-page.tsx`, change the form tag:
+```tsx
+<form
+  action="https://formspree.io/f/YOUR_FORM_ID"
+  method="POST"
+  // remove onSubmit handler
+>
+```
+
+**Alternative (Next.js API route + Resend):**
+Create `app/api/contact/route.ts`, install `resend`, send email on POST.
+
+### D. Deploy to Vercel
+
+```bash
+# Install Vercel CLI if needed
+npm i -g vercel
+
+# From squad-club-portal-final folder:
 vercel --prod
 ```
-Or connect https://github.com/kolli-dhanush-reddy/squad-mlrit to Vercel dashboard.
-`@vercel/analytics` is already installed and conditionally loaded in `layout.tsx` for production.
+
+Or connect the GitHub repo to Vercel dashboard at vercel.com for auto-deploy on every push.
+`@vercel/analytics` is already in dependencies and conditionally loaded in `layout.tsx`:
+```tsx
+{process.env.NODE_ENV === 'production' && <Analytics />}
+```
+
+### E. Admin Panel Backend (optional, discussed)
+
+See Section 8 for the Google Sheets approach discussion.
 
 ---
 
-## How to Run
+## 10. Key Decisions Log
 
-```bash
-cd squad-club-portal-final
-npm run dev       # → http://localhost:3000
-npm run build     # production build
-npm run start     # serve production build
+Every decision is recorded here with the reason, so future developers don't undo things that were intentional.
+
+| # | Decision | Reason |
+|---|----------|--------|
+| 1 | Multi-page routing (not SPA) | Bookmarkable URLs, better SEO, seniors preferred |
+| 2 | No Traditional Day event | Explicitly removed by seniors — do NOT add back |
+| 3 | 4 events only | codex, unplugged, outreach, project-expo |
+| 4 | Events open in modal popups | Not stacked sections — V1 pattern kept |
+| 5 | Splash auto-dismisses (no button) | Button felt wrong for parent audience |
+| 6 | Instagram + LinkedIn socials only | Seniors' decision — no GitHub/X |
+| 7 | Join page = "Applications Closed" | Not a form — applications are genuinely closed |
+| 8 | "Departmental Club" not "Departmental Technical Club" | Changed per seniors' request |
+| 9 | A in SQUAD logo is always atom SVG | Never shows the letter A — glyph decodes then atom appears |
+| 10 | Dark mode (gradient theme) | Seniors wanted richer colors, not plain background |
+| 11 | typescript.ignoreBuildErrors: true | Kept from V1 for faster iteration — intentional |
+| 12 | No new orientation-specific sections | Seniors explicitly said don't add anything new |
+| 13 | Admin password = Squad2026 | Set by user, stored client-side (known security limitation) |
+
+---
+
+## 11. Animation Reference
+
+All animations use `motion/react` (Framer Motion v12). Import: `import { motion } from "motion/react"`.
+
+### Standard entry animation (used on all section headings + cards)
+```tsx
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-60px" }}
+  transition={{ duration: 0.5 }}
+>
+```
+
+### Staggered children (used on grid cards)
+```tsx
+transition={{ duration: 0.5, delay: index * 0.08 }}
+```
+
+### Card hover lift
+```tsx
+whileHover={{ y: -4 }}
+```
+
+### Decorative background blobs
+```tsx
+<div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/8 blur-3xl" />
+```
+
+### Glassmorphism card style
+```tsx
+className="rounded-2xl border border-border bg-white/10 backdrop-blur-md"
+// On dark theme bg-white/10 gives a subtle lighter glass effect
+```
+
+### Navbar animated pill (active state indicator)
+```tsx
+<motion.span
+  layoutId="nav-pill"
+  className="absolute inset-0 rounded-full bg-accent"
+  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+/>
 ```
 
 ---
 
-## Theme Reference
+## 12. Important Technical Notes
 
-All in `app/globals.css` under `:root`:
+- **Color scheme is dark** — `color-scheme: dark !important` in CSS, `colorScheme: 'dark'` in viewport meta. Do not switch back to light without updating all components that use `bg-white/X` opacity values (they assume a dark background now).
 
-| Variable | Value | Purpose |
-|----------|-------|---------|
-| `--background` | `oklch(0.94 0.022 285)` | Soft violet page background |
-| `--primary` | `oklch(0.45 0.18 278)` | Main purple (buttons, accents) |
-| `--accent` | `oklch(0.93 0.035 278)` | Light purple (pill bg, icon bg) |
-| `--border` | `oklch(0.88 0.012 278)` | Purple-tinted borders |
-| `--muted-foreground` | `oklch(0.52 0.01 260)` | Secondary text |
-| `--foreground` | `oklch(0.17 0.008 260)` | Main dark text |
+- **Custom cursor** — active only on `pointer: fine` devices (desktop). Hidden on mobile/touch. Implemented in `custom-cursor.tsx` with spring physics.
 
-To darken background: lower first value in `--background` (0.94 → 0.88)
-To make it more purple: raise second value (0.022 → 0.04)
+- **Footer admin trigger** — the "Designed & built by the SQUAD core team." text in the footer has `id="footer-admin-trigger"`. The admin panel listens for click events on this ID.
 
----
+- **LayoutWrapper vs page.tsx** — splash screen state lives in `layout-wrapper.tsx` (client component). The root `layout.tsx` is a server component that wraps everything in `LayoutWrapper`. Children only render after splash dismisses.
 
-## Animation Patterns
+- **`next.config.mjs`** — has `typescript.ignoreBuildErrors: true` and `images: { unoptimized: true }`. Both intentional.
 
-All use `motion/react` (Framer Motion):
-- Entry: `initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}`
-- Cards hover lift: `whileHover={{ y: -4 }}`
-- Stagger: `transition={{ delay: i * 0.08 }}`
-- Blobs: `absolute rounded-full bg-primary/8 blur-3xl pointer-events-none`
-- Glass cards: `bg-white/30 backdrop-blur-md border border-border`
+- **Path aliases** — `@/*` maps to the project root. So `@/components/navbar` = `components/navbar.tsx`.
+
+- **No dark mode toggle** — the site is permanently dark. The `.dark {}` CSS block in globals.css still exists (from shadcn boilerplate) but is never activated.
 
 ---
 
-## Important Notes
+## 13. How to Run
 
-- Strict light mode — dark mode intentionally disabled (`color-scheme: light !important`)
-- Custom cursor active on desktop only (`pointer: fine` media query)
-- `typescript.ignoreBuildErrors: true` in `next.config.mjs` — intentional
-- Footer copyright text is a hidden admin trigger (`id="footer-admin-trigger"`)
-- Splash screen `onDismiss` prop called after 3.8s timer in `layout-wrapper.tsx`
-- Navbar uses `usePathname()` from `next/navigation` for active state
-- "A" in SQUAD logo is always the atom SVG — never the letter A
+```bash
+# Install dependencies
+npm install
+
+# Development (hot reload)
+npm run dev
+# → http://localhost:3000
+
+# Production build (verify before deploying)
+npm run build
+npm run start
+```
+
+---
+
+## 14. Git History Summary
+
+| Commit message | What changed |
+|----------------|-------------|
+| initial commit | All files created |
+| replace 'Departmental Technical Club' with 'Departmental Club' | Text change sitewide |
+| splash: lock A slot during decode... | First attempt at atom fix |
+| splash: decode S,Q,U,D first then A snaps to atom last | Second attempt |
+| splash: atom replaces A slot directly, A never shown | Final working version |
+| update handoff: splash rework, image upload guide... | Handoff update |
+| theme: deep navy (Option A) | Navy theme (tagged checkpoint-navy-theme) |
+| theme: Option C — rich violet to deep indigo gradient | Current active theme |
+
+**Tags:**
+- `checkpoint-violet-theme` — soft light violet (original)
+- `checkpoint-navy-theme` — deep navy blue (Option A)
