@@ -1,24 +1,11 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
 import { AdminPanel } from '@/components/admin-panel'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { CustomCursor } from '@/components/custom-cursor'
 import { LayoutWrapper } from '@/components/layout-wrapper'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'SQUAD — College Technical Club',
@@ -51,7 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       style={{ colorScheme: 'dark' }}
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className=""
     >
       <body className="antialiased">
         <CustomCursor />
