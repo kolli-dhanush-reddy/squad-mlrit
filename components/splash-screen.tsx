@@ -5,40 +5,55 @@ import { motion } from "motion/react"
 import { AtomMark } from "@/components/squad-logo"
 
 const TARGET = "SQUAD"
-const ATOM_INDEX = 3
 const GLYPHS = "!<>-_\\/[]{}—=+*^?#01ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 function DecodingText() {
-  const [display, setDisplay] = useState<string[]>(() => TARGET.split("").map(() => ""))
-  const [done, setDone] = useState(false)
+  // locked[i] = true once that letter has resolved
+  const [locked, setLocked] = useState<boolean[]>([false, false, false, false, false])
+  const [atomVisible, setAtomVisible] = useState(false)
 
   useEffect(() => {
-    let frame = 0
-    const lockAt = TARGET.split("").map((_, i) => 8 + i * 7)
-    const total = Math.max(...lockAt) + 6
+    // Lock S, Q, U, D in sequence — leave index 3 (A) for last
+    const order = [0, 1, 2, 4] // S Q U D
+    const timers: ReturnType<typeof setTimeout>[] = []
 
-    const interval = setInterval(() => {
-      frame += 1
-      setDisplay(
-        TARGET.split("").map((ch, i) => {
-          if (frame >= lockAt[i]) return ch
-          return GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
-        }),
+    order.forEach((idx, step) => {
+      timers.push(
+        setTimeout(() => {
+          setLocked((prev) => {
+            const next = [...prev]
+            next[idx] = true
+            return next
+          })
+        }, 400 + step * 300),
       )
-      if (frame >= total) {
-        clearInterval(interval)
-        setDone(true)
-      }
-    }, 55)
+    })
 
-    return () => clearInterval(interval)
+    // Lock the A last, then immediately swap to atom
+    timers.push(
+      setTimeout(() => {
+        setLocked([true, true, true, true, true])
+        setTimeout(() => setAtomVisible(true), 120)
+      }, 400 + 4 * 300),
+    )
+
+    return () => timers.forEach(clearTimeout)
   }, [])
 
-  const ghostText = display
-    .map((c, i) => (i === ATOM_INDEX && done && c === TARGET[ATOM_INDEX] ? "A" : c))
-    .join("")
+  // Scramble display for unlocked letters
+  const [scramble, setScramble] = useState<string[]>(["", "", "", "", ""])
+  useEffect(() => {
+    const id = setInterval(() => {
+      setScramble(TARGET.split("").map((ch, i) => {
+        if (locked[i]) return ch
+        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+      }))
+    }, 55)
+    return () => clearInterval(id)
+  }, [locked])
 
-  const atomRevealed = done && display[ATOM_INDEX] === TARGET[ATOM_INDEX]
+  // Ghost text for RGB split — always show plain letters (no atom in ghost)
+  const ghostText = TARGET.split("").map((ch, i) => locked[i] ? ch : (scramble[i] || ch)).join("")
 
   return (
     <span
@@ -62,32 +77,33 @@ function DecodingText() {
       </span>
 
       <span className="relative inline-flex items-center gap-[0.02em]">
-        {display.map((c, i) => {
-          if (i === ATOM_INDEX) {
-            // Always show the atom slot — locked to "A" during decode, then swaps to atom SVG
-            if (atomRevealed) {
+        {TARGET.split("").map((ch, i) => {
+          // The A slot
+          if (i === 3) {
+            if (atomVisible) {
               return (
                 <motion.span
-                  key={i}
-                  initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 160, damping: 12 }}
-                  className="inline-flex items-center text-white"
+                  key="atom"
+                  initial={{ opacity: 0, scale: 0.4, rotate: -180 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 14 }}
+                  className="inline-flex items-center justify-center text-white"
                 >
-                  <AtomMark className="h-[0.72em] w-[0.72em] sm:h-[0.74em] sm:w-[0.74em]" />
+                  <AtomMark className="h-[0.82em] w-[0.82em]" />
                 </motion.span>
               )
             }
-            // Lock the A slot to always show "A" while other letters are still decoding
+            // Show "A" while other letters decode, then lock it last
             return (
-              <span key={i} className="opacity-90">
-                A
+              <span key="a-slot">
+                {locked[i] ? "A" : (scramble[i] || "\u00A0")}
               </span>
             )
           }
+
           return (
-            <span key={i} className={c === TARGET[i] && done ? "" : "opacity-90"}>
-              {c || "\u00A0"}
+            <span key={i} className={locked[i] ? "" : "opacity-70"}>
+              {locked[i] ? ch : (scramble[i] || "\u00A0")}
             </span>
           )
         })}
