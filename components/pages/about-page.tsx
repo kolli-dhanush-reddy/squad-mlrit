@@ -85,12 +85,39 @@ export function AboutSection() {
           <h3 className="font-display text-xl font-bold text-foreground mb-8 tracking-wide uppercase">
             What SQUAD Stands For
           </h3>
-          <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl">
-            <span className="text-primary">S</span>chool of{" "}
-            <span className="text-primary">Q</span>ualitative{" "}
-            <span className="text-primary">U</span>nderstanding &amp;{" "}
-            <span className="text-primary">A</span>nalysis of{" "}
-            <span className="text-primary">D</span>ata
+          <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1">
+            {[
+              { letter: "S", rest: "chool" },
+              { letter: "", rest: "of" },
+              { letter: "Q", rest: "ualitative" },
+              { letter: "U", rest: "nderstanding" },
+              { letter: "", rest: "&" },
+              { letter: "A", rest: "nalysis" },
+              { letter: "", rest: "of" },
+              { letter: "D", rest: "ata" },
+            ].map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="inline-block"
+              >
+                {word.letter && (
+                  <motion.span
+                    className="text-primary"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.1, type: "spring", stiffness: 300 }}
+                  >
+                    {word.letter}
+                  </motion.span>
+                )}
+                {word.rest}
+              </motion.span>
+            ))}
           </p>
         </motion.div>
       </div>
