@@ -25,12 +25,6 @@ const PILLARS = [
   },
 ]
 
-const STATS = [
-  { value: "300+", label: "Active Members" },
-  { value: "40+", label: "Events Hosted" },
-  { value: "12", label: "ZPHS Schools Reached" },
-  { value: "4", label: "Flagship Events" },
-]
 
 export function HomeSection() {
   return (
@@ -155,27 +149,6 @@ export function HomeSection() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="border-y border-border bg-white/20 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-12 md:grid-cols-4 md:px-8">
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              className="flex flex-col items-center gap-1 text-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
-            >
-              <span className="font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
-                {s.value}
-              </span>
-              <span className="text-xs text-muted-foreground sm:text-sm">{s.label}</span>
-            </motion.div>
-          ))}
         </div>
       </div>
 
