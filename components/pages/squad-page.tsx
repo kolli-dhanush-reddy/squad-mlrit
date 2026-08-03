@@ -48,7 +48,8 @@ export function SquadSection() {
                 <img
                   src={member.avatar || "/placeholder.svg"}
                   alt={`${member.name}, ${member.role}`}
-                  className="h-full w-full object-cover object-top transition-all duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                  style={{ objectPosition: member.objectPosition ?? "center" }}
                 />
               </div>
               <div className="flex flex-col gap-0.5 p-4">

@@ -29,6 +29,7 @@ export type TeamMember = {
   name: string
   role: string
   avatar: string
+  objectPosition?: string
 }
 
 export const CORE_TEAM: TeamMember[] = [
@@ -36,7 +37,7 @@ export const CORE_TEAM: TeamMember[] = [
   { id: 2, name: "Vishnu",          role: "Vice President",    avatar: "/team/vishnu.jpeg"      },
   { id: 3, name: "Keerthana",       role: "Technical Lead",    avatar: "/team/keerthana.jpeg"   },
   { id: 4, name: "Ch. Ramesh",      role: "Promotions Lead",   avatar: "/team/ramesh.jpeg"      },
-  { id: 5, name: "Kameshwari",      role: "Arts",              avatar: "/team/kameshwari.jpeg"  },
+  { id: 5, name: "Kameshwari",      role: "Arts",              avatar: "/team/kameshwari.jpeg",  objectPosition: "top" },
   { id: 6, name: "Lavanya",         role: "Operations",        avatar: "/team/lavanya.jpeg"     },
   { id: 7, name: "K. Rajalakshmi", role: "Treasurer",         avatar: "/team/rajalakshmi.jpeg" },
 ]
