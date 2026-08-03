@@ -32,14 +32,13 @@ export type TeamMember = {
 }
 
 export const CORE_TEAM: TeamMember[] = [
-  { id: 1, name: "Aarav Sharma", role: "President", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 2, name: "Diya Patel", role: "Vice President", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 3, name: "Rohan Verma", role: "Technical Lead", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 4, name: "Ananya Rao", role: "Design Lead", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 5, name: "Karthik Nair", role: "Events Head", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 6, name: "Isha Gupta", role: "Outreach Head", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 7, name: "Vikram Singh", role: "Content Head", avatar: "/placeholder.svg?height=400&width=400" },
-  { id: 8, name: "Meera Iyer", role: "Treasurer", avatar: "/placeholder.svg?height=400&width=400" },
+  { id: 1, name: "D. Anjali",       role: "President",         avatar: "/team/anjali.png"       },
+  { id: 2, name: "Vishnu",          role: "Vice President",    avatar: "/team/vishnu.jpeg"      },
+  { id: 3, name: "Keerthana",       role: "Technical Lead",    avatar: "/team/keerthana.jpeg"   },
+  { id: 4, name: "Ch. Ramesh",      role: "Promotions Lead",   avatar: "/team/ramesh.jpeg"      },
+  { id: 5, name: "Kameshwari",      role: "Arts",              avatar: "/team/kameshwari.jpeg"  },
+  { id: 6, name: "Lavanya",         role: "Operations",        avatar: "/team/lavanya.jpeg"     },
+  { id: 7, name: "K. Rajalakshmi", role: "Treasurer",         avatar: "/team/rajalakshmi.jpeg" },
 ]
 
 export type EventContent = {
