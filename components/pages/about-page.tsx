@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, AnimatePresence } from "motion/react"
+import { motion } from "motion/react"
 import { useEffect, useState } from "react"
 import { Code2, Lightbulb, Users } from "lucide-react"
 import { AtomMark } from "@/components/squad-logo"
@@ -41,22 +41,23 @@ function FullFormTypewriter() {
   }, [visibleCount, phase])
 
   return (
-    <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1 min-h-[3rem]">
+    <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-y-1 min-h-[3rem]">
       {FULL_FORM_WORDS.map((word, i) => (
-        <AnimatePresence key={i}>
-          {i < visibleCount && (
-            <motion.span
-              initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="inline-block"
-            >
-              {word.letter && <span className="text-primary">{word.letter}</span>}
-              {word.rest}
-            </motion.span>
-          )}
-        </AnimatePresence>
+        <motion.span
+          key={i}
+          animate={{
+            opacity: i < visibleCount ? 1 : 0,
+            filter: i < visibleCount ? "blur(0px)" : "blur(6px)",
+            maxWidth: i < visibleCount ? "200px" : "0px",
+            marginRight: i < visibleCount ? "0.75rem" : "0px",
+          }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="inline-block overflow-hidden whitespace-nowrap"
+          style={{ maxWidth: "0px", opacity: 0 }}
+        >
+          {word.letter && <span className="text-primary">{word.letter}</span>}
+          {word.rest}
+        </motion.span>
       ))}
     </p>
   )
