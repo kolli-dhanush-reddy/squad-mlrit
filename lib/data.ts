@@ -33,13 +33,13 @@ export type TeamMember = {
 }
 
 export const CORE_TEAM: TeamMember[] = [
-  { id: 1, name: "D. Anjali",       role: "President",         avatar: "/team/anjali.png"       },
-  { id: 2, name: "Vishnu",          role: "Vice President",    avatar: "/team/vishnu.jpeg"      },
-  { id: 3, name: "Keerthana",       role: "Technical Lead",    avatar: "/team/keerthana.jpeg"   },
-  { id: 4, name: "Ch. Ramesh",      role: "Promotions Lead",   avatar: "/team/ramesh.jpeg"      },
-  { id: 5, name: "Kameshwari",      role: "Arts",              avatar: "/team/kameshwari.jpeg",  objectPosition: "top" },
-  { id: 6, name: "Lavanya",         role: "Operations",        avatar: "/team/lavanya.jpeg"     },
-  { id: 7, name: "K. Rajalakshmi", role: "Treasurer",         avatar: "/team/rajalakshmi.jpeg" },
+  { id: 1, name: "D. Anjali",       role: "President",         avatar: "/team/anjali.png"                                        },
+  { id: 2, name: "Vishnu",          role: "Vice President",    avatar: "/team/vishnu.jpeg"                                       },
+  { id: 3, name: "K. Rajalakshmi", role: "Treasurer",         avatar: "/team/rajalakshmi.jpeg"                                  },
+  { id: 4, name: "Keerthana",       role: "Technical Lead",    avatar: "/team/keerthana.jpeg"                                    },
+  { id: 5, name: "Ch. Ramesh",      role: "Promotions Lead",   avatar: "/team/ramesh.jpeg"                                       },
+  { id: 6, name: "Kameshwari",      role: "Arts",              avatar: "/team/kameshwari.jpeg", objectPosition: "top"            },
+  { id: 7, name: "Lavanya",         role: "Operations",        avatar: "/team/lavanya.jpeg"                                      },
 ]
 
 export type EventContent = {
