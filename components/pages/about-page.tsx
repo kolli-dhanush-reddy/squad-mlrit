@@ -18,21 +18,30 @@ const FULL_FORM_WORDS = [
 
 function FullFormTypewriter() {
   const [visibleCount, setVisibleCount] = useState(0)
-  const [key, setKey] = useState(0)
+  const [phase, setPhase] = useState<"in" | "pause" | "out">("in")
 
   useEffect(() => {
-    if (visibleCount < FULL_FORM_WORDS.length) {
-      const t = setTimeout(() => setVisibleCount(v => v + 1), 350)
-      return () => clearTimeout(t)
-    } else {
-      // pause fully visible, then restart
-      const t = setTimeout(() => { setVisibleCount(0); setKey(k => k + 1) }, 2200)
-      return () => clearTimeout(t)
+    if (phase === "in") {
+      if (visibleCount < FULL_FORM_WORDS.length) {
+        const t = setTimeout(() => setVisibleCount(v => v + 1), 350)
+        return () => clearTimeout(t)
+      } else {
+        const t = setTimeout(() => setPhase("out"), 2000)
+        return () => clearTimeout(t)
+      }
+    } else if (phase === "out") {
+      if (visibleCount > 0) {
+        const t = setTimeout(() => setVisibleCount(v => v - 1), 200)
+        return () => clearTimeout(t)
+      } else {
+        const t = setTimeout(() => setPhase("in"), 400)
+        return () => clearTimeout(t)
+      }
     }
-  }, [visibleCount])
+  }, [visibleCount, phase])
 
   return (
-    <p key={key} className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1 min-h-[3rem]">
+    <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1 min-h-[3rem]">
       {FULL_FORM_WORDS.map((word, i) => (
         <AnimatePresence key={i}>
           {i < visibleCount && (
@@ -40,7 +49,7 @@ function FullFormTypewriter() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.25 }}
               className="inline-block"
             >
               {word.letter && <span className="text-primary">{word.letter}</span>}
