@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import { Code2, Lightbulb, Users, Target } from "lucide-react"
+import { Code2, Lightbulb, Users } from "lucide-react"
 import { AtomMark } from "@/components/squad-logo"
 
 const PILLARS = [
@@ -20,13 +20,6 @@ const PILLARS = [
     title: "A Builder Community",
     body: "A tight-knit crew that learns together, ships together, and lifts the whole campus with it.",
   },
-]
-
-const STATS = [
-  { value: "300+", label: "Active Members" },
-  { value: "40+", label: "Events Hosted" },
-  { value: "12", label: "ZPHS Schools Reached" },
-  { value: "4", label: "Flagship Events" },
 ]
 
 export function AboutSection() {
@@ -81,32 +74,37 @@ export function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Stats */}
+        {/* SQUAD Full Form */}
         <motion.div
-          className="rounded-2xl border border-border bg-white/30 backdrop-blur-md p-8"
+          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="mb-6 flex items-center gap-3">
-            <Target className="h-6 w-6 text-primary" />
-            <h3 className="font-display text-xl font-bold text-foreground">Our Impact</h3>
-          </div>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {STATS.map((s, i) => (
+          <h3 className="font-display text-xl font-bold text-foreground mb-8 text-center tracking-wide uppercase">
+            What SQUAD Stands For
+          </h3>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+            {[
+              { letter: "S", word: "School of" },
+              { letter: "Q", word: "Qualitative" },
+              { letter: "U", word: "Understanding &" },
+              { letter: "A", word: "Analysis of" },
+              { letter: "D", word: "Data" },
+            ].map((item, i) => (
               <motion.div
-                key={s.label}
-                className="flex flex-col items-center gap-1 text-center"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                key={item.letter}
+                className="flex flex-col items-center gap-2 text-center"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
               >
-                <span className="font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
-                  {s.value}
+                <span className="font-display text-5xl font-bold text-primary sm:text-6xl">
+                  {item.letter}
                 </span>
-                <span className="text-xs text-muted-foreground sm:text-sm">{s.label}</span>
+                <span className="text-sm text-muted-foreground sm:text-base">{item.word}</span>
               </motion.div>
             ))}
           </div>
