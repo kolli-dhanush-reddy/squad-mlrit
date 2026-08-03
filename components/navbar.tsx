@@ -67,47 +67,70 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile backdrop + slide-in menu */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            className="overflow-hidden border-t border-border bg-background/95 backdrop-blur-md lg:hidden"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            <ul className="grid grid-cols-2 gap-1.5 px-4 py-3">
-              {NAV_TABS.map((tab) => {
-                const isActive = pathname === `/${tab.id}` || (tab.id === "home" && pathname === "/")
-                return (
-                  <li key={tab.id}>
-                    <Link
-                      href={tab.id === "home" ? "/" : `/${tab.id}`}
-                      onClick={() => setOpen(false)}
-                      className={cn(
-                        "block w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors",
-                        isActive
-                          ? "bg-accent text-primary"
-                          : "text-muted-foreground hover:bg-secondary hover:text-foreground",
-                      )}
-                    >
-                      {tab.label}
-                    </Link>
-                  </li>
-                )
-              })}
-              <li className="col-span-2">
+          <>
+            {/* Blurred backdrop */}
+            <motion.div
+              className="fixed inset-0 z-[7999] bg-black/40 backdrop-blur-sm lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setOpen(false)}
+            />
+            {/* Slide-in panel */}
+            <motion.div
+              className="fixed right-0 top-0 z-[8001] h-full w-72 border-l border-border bg-background/95 backdrop-blur-xl shadow-2xl lg:hidden flex flex-col"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              <div className="flex items-center justify-between border-b border-border px-5 py-4">
+                <SquadWordmark tone="dark" className="text-xl" />
+                <button
+                  type="button"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-foreground"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <ul className="flex flex-col gap-1 px-4 py-4 flex-1">
+                {NAV_TABS.map((tab) => {
+                  const isActive = pathname === `/${tab.id}` || (tab.id === "home" && pathname === "/")
+                  return (
+                    <li key={tab.id}>
+                      <Link
+                        href={tab.id === "home" ? "/" : `/${tab.id}`}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "flex w-full items-center rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-accent text-primary"
+                            : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                        )}
+                      >
+                        {tab.label}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+              <div className="px-4 pb-6">
                 <Link
                   href="/join"
                   onClick={() => setOpen(false)}
-                  className="block w-full rounded-lg bg-primary px-3 py-2.5 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  className="block w-full rounded-xl bg-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   Join us
                 </Link>
-              </li>
-            </ul>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>
