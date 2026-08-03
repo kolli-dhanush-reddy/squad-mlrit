@@ -76,7 +76,7 @@ export function AboutSection() {
 
         {/* SQUAD Full Form */}
         <motion.div
-          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12 text-center"
+          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12 text-center overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
@@ -85,40 +85,25 @@ export function AboutSection() {
           <h3 className="font-display text-xl font-bold text-foreground mb-8 tracking-wide uppercase">
             What SQUAD Stands For
           </h3>
-          <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1">
-            {[
-              { letter: "S", rest: "chool" },
-              { letter: "", rest: "of" },
-              { letter: "Q", rest: "ualitative" },
-              { letter: "U", rest: "nderstanding" },
-              { letter: "", rest: "&" },
-              { letter: "A", rest: "nalysis" },
-              { letter: "", rest: "of" },
-              { letter: "D", rest: "ata" },
-            ].map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="inline-block"
-              >
-                {word.letter && (
-                  <motion.span
-                    className="text-primary"
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: i * 0.1, type: "spring", stiffness: 300 }}
-                  >
-                    {word.letter}
-                  </motion.span>
-                )}
-                {word.rest}
-              </motion.span>
-            ))}
-          </p>
+          <div className="relative overflow-hidden">
+            <motion.p
+              className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl whitespace-nowrap"
+              animate={{ x: ["100%", "-100%"] }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            >
+              <span className="text-primary">S</span>chool&nbsp;of&nbsp;
+              <span className="text-primary">Q</span>ualitative&nbsp;
+              <span className="text-primary">U</span>nderstanding&nbsp;&amp;&nbsp;
+              <span className="text-primary">A</span>nalysis&nbsp;of&nbsp;
+              <span className="text-primary">D</span>ata
+              &nbsp;&nbsp;•&nbsp;&nbsp;
+              <span className="text-primary">S</span>chool&nbsp;of&nbsp;
+              <span className="text-primary">Q</span>ualitative&nbsp;
+              <span className="text-primary">U</span>nderstanding&nbsp;&amp;&nbsp;
+              <span className="text-primary">A</span>nalysis&nbsp;of&nbsp;
+              <span className="text-primary">D</span>ata
+            </motion.p>
+          </div>
         </motion.div>
       </div>
     </section>
