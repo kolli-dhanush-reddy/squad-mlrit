@@ -1,8 +1,57 @@
 "use client"
 
-import { motion } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
+import { useEffect, useState } from "react"
 import { Code2, Lightbulb, Users } from "lucide-react"
 import { AtomMark } from "@/components/squad-logo"
+
+const FULL_FORM_WORDS = [
+  { letter: "S", rest: "chool" },
+  { letter: "", rest: "of" },
+  { letter: "Q", rest: "ualitative" },
+  { letter: "U", rest: "nderstanding" },
+  { letter: "", rest: "&" },
+  { letter: "A", rest: "nalysis" },
+  { letter: "", rest: "of" },
+  { letter: "D", rest: "ata" },
+]
+
+function FullFormTypewriter() {
+  const [visibleCount, setVisibleCount] = useState(0)
+  const [key, setKey] = useState(0)
+
+  useEffect(() => {
+    if (visibleCount < FULL_FORM_WORDS.length) {
+      const t = setTimeout(() => setVisibleCount(v => v + 1), 350)
+      return () => clearTimeout(t)
+    } else {
+      // pause fully visible, then restart
+      const t = setTimeout(() => { setVisibleCount(0); setKey(k => k + 1) }, 2200)
+      return () => clearTimeout(t)
+    }
+  }, [visibleCount])
+
+  return (
+    <p key={key} className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl flex flex-wrap justify-center gap-x-3 gap-y-1 min-h-[3rem]">
+      {FULL_FORM_WORDS.map((word, i) => (
+        <AnimatePresence key={i}>
+          {i < visibleCount && (
+            <motion.span
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+              className="inline-block"
+            >
+              {word.letter && <span className="text-primary">{word.letter}</span>}
+              {word.rest}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      ))}
+    </p>
+  )
+}
 
 const PILLARS = [
   {
@@ -76,7 +125,7 @@ export function AboutSection() {
 
         {/* SQUAD Full Form */}
         <motion.div
-          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12 text-center overflow-hidden"
+          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
@@ -85,25 +134,7 @@ export function AboutSection() {
           <h3 className="font-display text-xl font-bold text-foreground mb-8 tracking-wide uppercase">
             What SQUAD Stands For
           </h3>
-          <div className="relative overflow-hidden">
-            <motion.p
-              className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl whitespace-nowrap"
-              animate={{ x: ["100%", "-100%"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-            >
-              <span className="text-primary">S</span>chool&nbsp;of&nbsp;
-              <span className="text-primary">Q</span>ualitative&nbsp;
-              <span className="text-primary">U</span>nderstanding&nbsp;&amp;&nbsp;
-              <span className="text-primary">A</span>nalysis&nbsp;of&nbsp;
-              <span className="text-primary">D</span>ata
-              &nbsp;&nbsp;•&nbsp;&nbsp;
-              <span className="text-primary">S</span>chool&nbsp;of&nbsp;
-              <span className="text-primary">Q</span>ualitative&nbsp;
-              <span className="text-primary">U</span>nderstanding&nbsp;&amp;&nbsp;
-              <span className="text-primary">A</span>nalysis&nbsp;of&nbsp;
-              <span className="text-primary">D</span>ata
-            </motion.p>
-          </div>
+          <FullFormTypewriter />
         </motion.div>
       </div>
     </section>
