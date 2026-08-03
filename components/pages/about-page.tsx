@@ -76,38 +76,22 @@ export function AboutSection() {
 
         {/* SQUAD Full Form */}
         <motion.div
-          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12"
+          className="rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 md:p-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h3 className="font-display text-xl font-bold text-foreground mb-8 text-center tracking-wide uppercase">
+          <h3 className="font-display text-xl font-bold text-foreground mb-8 tracking-wide uppercase">
             What SQUAD Stands For
           </h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-            {[
-              { letter: "S", word: "School of" },
-              { letter: "Q", word: "Qualitative" },
-              { letter: "U", word: "Understanding &" },
-              { letter: "A", word: "Analysis of" },
-              { letter: "D", word: "Data" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.letter}
-                className="flex flex-col items-center gap-2 text-center"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-              >
-                <span className="font-display text-5xl font-bold text-primary sm:text-6xl">
-                  {item.letter}
-                </span>
-                <span className="text-sm text-muted-foreground sm:text-base">{item.word}</span>
-              </motion.div>
-            ))}
-          </div>
+          <p className="font-display text-2xl font-bold leading-snug tracking-tight sm:text-3xl md:text-4xl">
+            <span className="text-primary">S</span>chool of{" "}
+            <span className="text-primary">Q</span>ualitative{" "}
+            <span className="text-primary">U</span>nderstanding &amp;{" "}
+            <span className="text-primary">A</span>nalysis of{" "}
+            <span className="text-primary">D</span>ata
+          </p>
         </motion.div>
       </div>
     </section>
