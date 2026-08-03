@@ -14,7 +14,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-[8000] border-b border-border/70 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-[8000] border-b border-border bg-background backdrop-blur-none">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
         <Link href="/" className="flex items-center" aria-label="Go to home">
           <SquadWordmark tone="dark" className="text-2xl" />
@@ -71,13 +71,13 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <>
-            {/* Blurred backdrop */}
+            {/* Blurred backdrop — dims the page */}
             <motion.div
-              className="fixed inset-0 z-[7999] bg-black/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-[7999] bg-black/60 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.25 }}
               onClick={() => setOpen(false)}
             />
             {/* Slide-in panel */}
