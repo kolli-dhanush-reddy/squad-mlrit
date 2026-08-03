@@ -38,7 +38,7 @@ export const CORE_TEAM: TeamMember[] = [
   { id: 3,  name: "K. Rajalakshmi", role: "Treasurer",          avatar: "/team/rajalakshmi.jpeg"                            },
   { id: 4,  name: "Keerthana",       role: "Tech Lead",          avatar: "/team/keerthana.jpeg"                              },
   { id: 5,  name: "Kameshwari",      role: "Arts Lead",          avatar: "/team/kameshwari.jpeg", objectPosition: "top"      },
-  { id: 6,  name: "TBA",             role: "Photography Lead",   avatar: "/placeholder-user.jpg"                            },
+  { id: 6,  name: "Likith",           role: "Photography Lead",   avatar: "/team/likith.jpeg"                                 },
   { id: 7,  name: "TBA",             role: "External Lead",      avatar: "/placeholder-user.jpg"                            },
   { id: 8,  name: "Ch. Ramesh",      role: "Promotions Lead",    avatar: "/team/ramesh.jpeg"                                 },
   { id: 9,  name: "Lavanya",         role: "Operations Lead",    avatar: "/team/lavanya.jpeg"                                },
@@ -188,14 +188,18 @@ export const SOCIALS = [
 ]
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 1, src: "/placeholder.svg?height=400&width=400&query=squad+event+1", alt: "SQUAD Event 1", span: "square" },
-  { id: 2, src: "/placeholder.svg?height=640&width=480&query=squad+event+2", alt: "SQUAD Event 2", span: "tall" },
-  { id: 3, src: "/placeholder.svg?height=420&width=680&query=squad+event+3", alt: "SQUAD Event 3", span: "wide" },
-  { id: 4, src: "/placeholder.svg?height=400&width=400&query=squad+event+4", alt: "SQUAD Event 4", span: "square" },
-  { id: 5, src: "/placeholder.svg?height=400&width=400&query=squad+event+5", alt: "SQUAD Event 5", span: "square" },
-  { id: 6, src: "/placeholder.svg?height=640&width=480&query=squad+event+6", alt: "SQUAD Event 6", span: "tall" },
-  { id: 7, src: "/placeholder.svg?height=420&width=680&query=squad+event+7", alt: "SQUAD Event 7", span: "wide" },
-  { id: 8, src: "/placeholder.svg?height=400&width=400&query=squad+event+8", alt: "SQUAD Event 8", span: "square" },
+  { id: 1,  src: "/gallery/photo1.jpeg",  alt: "SQUAD Gallery 1",  span: "square" },
+  { id: 2,  src: "/gallery/photo2.jpeg",  alt: "SQUAD Gallery 2",  span: "tall"   },
+  { id: 3,  src: "/gallery/photo3.jpeg",  alt: "SQUAD Gallery 3",  span: "wide"   },
+  { id: 4,  src: "/gallery/photo4.jpeg",  alt: "SQUAD Gallery 4",  span: "square" },
+  { id: 5,  src: "/gallery/photo5.jpeg",  alt: "SQUAD Gallery 5",  span: "square" },
+  { id: 6,  src: "/gallery/photo6.jpeg",  alt: "SQUAD Gallery 6",  span: "tall"   },
+  { id: 7,  src: "/gallery/photo7.jpeg",  alt: "SQUAD Gallery 7",  span: "wide"   },
+  { id: 8,  src: "/gallery/photo8.jpeg",  alt: "SQUAD Gallery 8",  span: "square" },
+  { id: 9,  src: "/gallery/photo9.jpeg",  alt: "SQUAD Gallery 9",  span: "square" },
+  { id: 10, src: "/gallery/photo10.jpeg", alt: "SQUAD Gallery 10", span: "tall"   },
+  { id: 11, src: "/gallery/photo11.jpeg", alt: "SQUAD Gallery 11", span: "wide"   },
+  { id: 12, src: "/gallery/photo12.jpeg", alt: "SQUAD Gallery 12", span: "square" },
 ]
 
 export const CONTACT_EMAIL = "squadmlrit@gmail.com"
