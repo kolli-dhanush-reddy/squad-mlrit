@@ -18,23 +18,23 @@ const FULL_FORM_WORDS = [
 
 function FullFormTypewriter() {
   const [visibleCount, setVisibleCount] = useState(0)
-  const [phase, setPhase] = useState<"in" | "pause" | "out">("in")
+  const [phase, setPhase] = useState<"in" | "out">("in")
 
   useEffect(() => {
     if (phase === "in") {
       if (visibleCount < FULL_FORM_WORDS.length) {
-        const t = setTimeout(() => setVisibleCount(v => v + 1), 350)
+        const t = setTimeout(() => setVisibleCount(v => v + 1), 500)
         return () => clearTimeout(t)
       } else {
-        const t = setTimeout(() => setPhase("out"), 2000)
+        const t = setTimeout(() => setPhase("out"), 2800)
         return () => clearTimeout(t)
       }
-    } else if (phase === "out") {
+    } else {
       if (visibleCount > 0) {
-        const t = setTimeout(() => setVisibleCount(v => v - 1), 200)
+        const t = setTimeout(() => setVisibleCount(v => v - 1), 320)
         return () => clearTimeout(t)
       } else {
-        const t = setTimeout(() => setPhase("in"), 400)
+        const t = setTimeout(() => setPhase("in"), 600)
         return () => clearTimeout(t)
       }
     }
@@ -46,10 +46,10 @@ function FullFormTypewriter() {
         <AnimatePresence key={i}>
           {i < visibleCount && (
             <motion.span
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
+              initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
               className="inline-block"
             >
               {word.letter && <span className="text-primary">{word.letter}</span>}
