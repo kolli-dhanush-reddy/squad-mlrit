@@ -29,14 +29,15 @@ const PILLARS = [
 export function HomeSection() {
   return (
     <section id="home" className="relative overflow-hidden">
-      {/* Decorative blobs */}
-      <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-      <div className="pointer-events-none absolute -left-24 top-1/2 h-72 w-72 rounded-full bg-accent/60 blur-3xl" />
+      {/* Ambient background blobs */}
+      <div className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-primary/15 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-32 top-1/3 h-[400px] w-[400px] rounded-full bg-primary/10 blur-[100px]" />
+      <div className="pointer-events-none absolute left-1/2 top-2/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-accent/40 blur-[80px]" />
 
       {/* Hero */}
       <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-6 border-b border-border px-4 py-20 md:px-8 md:py-32 min-h-[82vh]">
         <motion.span
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-white/40 backdrop-blur-md px-4 py-1.5 text-xs font-medium tracking-wide text-muted-foreground"
+          className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium tracking-wide text-primary"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -51,7 +52,11 @@ export function HomeSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05 }}
         >
-          Empowering innovation, technical mastery, and collaborative growth.
+          Empowering{" "}
+          <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-foreground bg-clip-text text-transparent">
+            innovation
+          </span>
+          , technical mastery, and collaborative growth.
         </motion.h1>
 
         <motion.p
@@ -70,16 +75,18 @@ export function HomeSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.18 }}
         >
+          {/* Primary CTA — solid with glow */}
           <Link
             href="/events"
-            className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-primary/90 hover:shadow-primary/50 hover:shadow-xl"
           >
             Explore Our Events
             <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-1" />
           </Link>
+          {/* Secondary CTA — ghost outline */}
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-white/30 backdrop-blur-md px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/50"
+            className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-primary/50 hover:text-primary"
           >
             Get in Touch
             <ArrowRight className="h-4 w-4" />
@@ -201,18 +208,19 @@ export function HomeSection() {
       {/* Bottom CTA */}
       <div className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
         <motion.div
-          className="rounded-2xl border border-border bg-primary/5 backdrop-blur-md p-8 md:p-12 text-center"
+          className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/5 p-8 md:p-12 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+          <h2 className="relative mb-4 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
             Ready to innovate with us?
           </h2>
           <Link
             href="/join"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="relative inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-primary/90 hover:shadow-primary/50 hover:shadow-xl"
           >
             Join us <ArrowRight className="h-5 w-5" />
           </Link>
