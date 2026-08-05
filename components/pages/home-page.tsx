@@ -12,16 +12,22 @@ const PILLARS = [
     icon: Code2,
     title: "Technical Excellence",
     body: "We sharpen skills through competitions, workshops, and real projects that push engineering craft.",
+    iconClass: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.25)]",
+    cardHover: "hover:border-cyan-500/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.15)]",
   },
   {
     icon: Lightbulb,
     title: "Relentless Innovation",
     body: "From prototypes to production ideas, we turn curiosity into things that actually work.",
+    iconClass: "bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.25)]",
+    cardHover: "hover:border-indigo-500/40 hover:shadow-[0_0_25px_rgba(99,102,241,0.15)]",
   },
   {
     icon: Users,
     title: "A Builder Community",
     body: "A tight-knit crew that learns together, ships together, and lifts the whole campus with it.",
+    iconClass: "bg-sky-500/10 text-sky-400 border border-sky-500/30 shadow-[0_0_15px_rgba(14,165,233,0.25)]",
+    cardHover: "hover:border-sky-500/40 hover:shadow-[0_0_25px_rgba(14,165,233,0.15)]",
   },
 ]
 
@@ -141,18 +147,18 @@ export function HomeSection() {
             {PILLARS.map((p, i) => (
               <motion.div
                 key={p.title}
-                className="flex flex-col gap-3 rounded-2xl border border-border bg-white/30 backdrop-blur-md p-5"
+                className={`flex flex-col gap-3 rounded-2xl border border-border bg-white/30 backdrop-blur-md p-5 transition-all duration-300 ${p.cardHover}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -5 }}
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
+                <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${p.iconClass}`}>
                   <p.icon className="h-5 w-5" />
                 </span>
-                <h3 className="font-display text-sm font-semibold text-foreground sm:text-base">{p.title}</h3>
-                <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{p.body}</p>
+                <h3 className="font-display text-lg font-semibold tracking-tight text-white">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-200">{p.body}</p>
               </motion.div>
             ))}
           </div>
