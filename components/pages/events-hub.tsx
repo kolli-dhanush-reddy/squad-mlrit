@@ -56,20 +56,20 @@ export function EventsHub() {
                 <h3 className="mb-2 font-display text-xl font-bold text-foreground transition-colors group-hover:text-primary">
                   {EVENTS[key].title}
                 </h3>
-                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-foreground/80">
                   {EVENTS[key].description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {EVENTS[key].highlights.slice(0, 2).map((h) => (
                     <span
                       key={h}
-                      className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-medium text-foreground"
+                      className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold text-foreground"
                     >
                       {h}
                     </span>
                   ))}
                   {EVENTS[key].highlights.length > 2 && (
-                    <span className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                    <span className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold text-foreground/70">
                       +{EVENTS[key].highlights.length - 2}
                     </span>
                   )}
@@ -140,7 +140,7 @@ function EventModal({
             <h2 className="mb-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {event.title}
             </h2>
-            <p className="max-w-3xl text-pretty text-base leading-relaxed text-muted-foreground">
+            <p className="max-w-3xl text-pretty text-base leading-relaxed text-foreground/80">
               {event.description}
             </p>
           </motion.div>
