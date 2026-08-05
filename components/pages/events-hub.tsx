@@ -47,29 +47,26 @@ export function EventsHub() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 whileHover={{ y: -4 }}
               >
-                {/* Hover accent */}
-                <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100" />
-
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-primary">
                   <Zap className="h-6 w-6" />
                 </div>
                 <h3 className="mb-2 font-display text-xl font-bold text-foreground transition-colors group-hover:text-primary">
                   {EVENTS[key].title}
                 </h3>
-                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-slate-300">
                   {EVENTS[key].description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {EVENTS[key].highlights.slice(0, 2).map((h) => (
                     <span
                       key={h}
-                      className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-medium text-foreground"
+                      className="rounded-full border border-slate-700 bg-slate-900/50 px-2.5 py-1 text-xs font-semibold text-slate-300"
                     >
                       {h}
                     </span>
                   ))}
                   {EVENTS[key].highlights.length > 2 && (
-                    <span className="rounded-full border border-border bg-white/40 backdrop-blur-sm px-2.5 py-1 text-xs font-medium text-muted-foreground">
+                    <span className="rounded-full border border-slate-700 bg-slate-900/50 px-2.5 py-1 text-xs font-semibold text-slate-400">
                       +{EVENTS[key].highlights.length - 2}
                     </span>
                   )}
@@ -140,7 +137,7 @@ function EventModal({
             <h2 className="mb-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               {event.title}
             </h2>
-            <p className="max-w-3xl text-pretty text-base leading-relaxed text-muted-foreground">
+            <p className="max-w-3xl text-pretty text-base leading-relaxed text-slate-300">
               {event.description}
             </p>
           </motion.div>
@@ -154,7 +151,7 @@ function EventModal({
             {event.highlights.map((h) => (
               <span
                 key={h}
-                className="rounded-full border border-border bg-accent px-4 py-2 text-sm font-medium text-foreground"
+                className="rounded-full border border-slate-700 bg-slate-900/50 px-4 py-2 text-sm font-semibold text-slate-300"
               >
                 {h}
               </span>
