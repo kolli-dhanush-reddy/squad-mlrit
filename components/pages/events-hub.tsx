@@ -40,7 +40,7 @@ export function EventsHub() {
                 key={key}
                 type="button"
                 onClick={() => setSelectedEvent(key)}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-white/30 backdrop-blur-md p-8 text-left transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                className="group relative overflow-hidden rounded-2xl border border-border bg-white/10 backdrop-blur-md p-8 text-left transition-all hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
